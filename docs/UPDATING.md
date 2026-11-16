@@ -17,20 +17,22 @@ This guide installs a `smartframe.img` image on the frame with **PhoenixSuit**, 
 | A Windows PC | PhoenixSuit is a Windows program. |
 | A USB data cable with **USB-A plugs on both ends** | The seller calls it a double-ended data cable. A charge-only cable will not work. |
 | The `smartframe.img` image | From [`firmware/`](../firmware). |
-| The seller's update package | Contains PhoenixSuit V2.0.7, the USB driver and the seller's instructions. Normally it came with the frame (a `.rar` archive). We do not redistribute it. |
-| The frame | With its power setup as shown in the seller's instruction video. |
+| PhoenixSuit and the USB driver | Included in this repository: [`flashing-tools/`](../flashing-tools) (unmodified copies of the seller's files). |
+| The frame | In the seller's video the frame is connected only by the USB cable (no separate power adapter is visible in the frames we checked; the audio was not analysed). If your frame is not detected, see the troubleshooting table. |
 
-Files you will use from the seller's package (check your copies against these SHA-256 values; a different hash just means a different version):
+Files from [`flashing-tools/`](../flashing-tools) that you will use (SHA-256 values are in [`flashing-tools/SHA256SUMS`](../flashing-tools/SHA256SUMS)):
 
-| File | SHA-256 |
+| File | Purpose |
 |---|---|
-| `PhoenixSuit_V2.0.7.zip` | `9705b2c0df51eb6554df2eb656e5a49993e0b48e4812f1f93e38fd321b94e55e` |
-| `usbdriver_V1.0.0.4.zip` | `f4e41c34dc8cbe7a05a8ff18fef8a648caabf7b771ffed47914b66c5b1190b4f` |
-| the package archive (`升级(1).rar`, 61 392 642 bytes) | `7fb422cb8b3574c594d9858e5f0c023fcfbf1e3b9ed73a8f36813f655adb78e4` |
+| `PhoenixSuit_V2.0.7.zip` | the flashing program |
+| `usbdriver_V1.0.0.4.zip` | the USB driver for flashing mode |
+| `seller_update_video.mp4` | the seller's demonstration of the cable connection and button press (optional, Chinese) |
+
+Read the [safety note](../flashing-tools/README.md#safety-note) first: these files come from the seller and were not signed or scanned by this project.
 
 ## 2. Prepare the PC (once)
 
-1. Create a simple working folder with a short ASCII path, for example `C:\PhotoFrame\`, and copy the image and the seller's files there.
+1. Create a simple working folder with a short ASCII path, for example `C:\PhotoFrame\`, and copy there the image you chose and the two zip files from `flashing-tools/` (download them from GitHub or clone the repository).
 2. Unpack the USB driver archive and the PhoenixSuit archive completely (right-click, Extract All). Do not run PhoenixSuit from inside the zip file.
 3. Install the USB driver: in the unpacked driver folder run `InstallUSBDrv.bat` (right-click, Run as administrator if Windows asks).
    - If Windows blocks the driver or the installation fails, stop and note the message. Do not disable Windows protection blindly; check that the unpacked folder is complete and try again.

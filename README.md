@@ -1,6 +1,6 @@
 # Photo frame firmware mod for YD_F102_MIPI_V3.0 (Allwinner F102)
 
-Custom firmware images for photo frames built on the **YD_F102_MIPI_V3.0** board (Allwinner F102, Melis RTOS), plus the original seller firmware, flashing instructions and the tools used to build the images.
+Custom firmware images for photo frames built on the **YD_F102_MIPI_V3.0** board (Allwinner F102, Melis RTOS), plus the original seller firmware, everything needed to flash it (PhoenixSuit, the USB driver, a step-by-step guide) and the tools used to build the images.
 
 The mod gives the frame a light interface, adds the **Ukrainian** language and fixes a number of unreadable screens. It also contains a fix that makes frames with an **HT101D08S / JDH328DK0** screen work, which did not start with the seller's firmware (static colour stripes).
 
@@ -40,7 +40,7 @@ Each folder contains one file, `smartframe.img`. More about the options: [firmwa
 Full step-by-step guide: **[docs/UPDATING.md](docs/UPDATING.md)**. The short version:
 
 1. Identify your hardware variant and take the matching `smartframe.img`.
-2. On a Windows PC install the seller's USB driver and start PhoenixSuit (both come in the seller's update package; see the guide).
+2. On a Windows PC install the USB driver and start PhoenixSuit; both are in [`flashing-tools/`](flashing-tools).
 3. Select the image, choose the full-erase mode, put the frame into flashing mode (hold **Power** while plugging the USB cable in) and wait for the success message.
 4. Set the language in Settings.
 
@@ -61,6 +61,7 @@ Full step-by-step guide: **[docs/UPDATING.md](docs/UPDATING.md)**. The short ver
 
 - [Identify your frame](docs/IDENTIFY_YOUR_FRAME.md): hardware variants and how to tell them apart.
 - [Updating the firmware](docs/UPDATING.md): complete flashing guide, troubleshooting, restoring the original.
+- [Flashing tools](flashing-tools): PhoenixSuit, the USB driver and the seller's demonstration video, with checksums and a safety note.
 - [Features and changes](docs/FEATURES.md): what the mod changes and what it does not.
 - [Panel init difference](docs/PANEL_INIT_DIFFERENCE.md): what exactly differs between the two images.
 - [Technical notes](docs/TECHNICAL_NOTES.md): hardware facts, how the screen problem was solved, what was verified.
@@ -70,7 +71,7 @@ Full step-by-step guide: **[docs/UPDATING.md](docs/UPDATING.md)**. The short ver
 
 ## Rights and legal
 
-The images are **derived from the seller's firmware** (kernel, application, resources). The original seller image is included unmodified so that you can restore it. The repository is currently private; before making it public the right to redistribute these files needs to be clarified. PhoenixSuit and the USB driver belong to their authors and are not included; see the guide for how to obtain them.
+The images are **derived from the seller's firmware** (kernel, application, resources). The original seller image is included unmodified so that you can restore it. The files in `flashing-tools/` (PhoenixSuit, the USB driver, the demonstration video) are the seller's unmodified files and belong to their authors. The repository is currently private; **before making it public the right to redistribute all of these files has to be clarified**, and the third-party files may have to be removed or replaced by download instructions.
 
 No licence has been chosen for the scripts in `build_kit/` and `analysis_tools/` yet. The panel init tables in `build_kit/data/corpus.json` come from open drivers (Linux kernel, Seeed Studio, JieLi/Tuya, Allwinner BSP, CanMV, Milk-V and others) under their own licences; the `source` field of each table names its origin.
 
