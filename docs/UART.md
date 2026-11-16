@@ -1,111 +1,58 @@
-# CH340G: підключення до рамки та журнал UART
+# Reading the boot log (UART)
 
-## Навіщо CH340G
+Optional. A USB-UART adapter gives you the frame's boot log: the panel ID, the flash chip model, the selected panel driver and any errors. It is the most reliable way to identify a panel ([Identify your frame](IDENTIFY_YOUR_FRAME.md)) or to diagnose a problem.
 
-CH340G — це перехідник USB ↔ UART (послідовний порт). **Прошивку через нього не записують**: запис іде як і раніше — PhoenixSuit через USB-кабель і кнопку Power. CH340G дає:
+The adapter does **not** flash the firmware. Flashing is always done with PhoenixSuit over USB ([UPDATING.md](UPDATING.md)).
 
-- журнал завантаження ядра (консоль Melis): ID LCD-панелі, обраний драйвер, модель flash, помилки;
-- командний рядок RT-Thread (`msh`) для читання стану системи.
+## Where the port is
 
-Головне питання, на яке відповідає журнал: що саме відбувається з панеллю рамки 2 (який ID зчитано, яку таблицю запущено, чи стартує система далі).
+On the back of the board (`YD_F102_MIPI_V3.0`), near the touch-controller chip and a flat-cable connector, there are labelled pads **`PE6 TX2`**, **`GND`**, **`PE7 RX2`**. From the firmware configuration (`[uart_para]`): UART2, 115200 baud, 8N1; the processor's pins are 3.3 V. Nearby pads `PE8 TX3` / `PE9 RX3` belong to UART3, which is not the one you need.
 
-## Що відомо про порт (з прошивки та фото)
+## What you need
 
-- `sys_config.fex`, розділ `[uart_para]`: `uart_debug_port = 2`, `uart_debug_baudrate = 115200`, TX = `PE06`, RX = `PE07`.
-- На платі є підписані площадки: **`PE6 TX2`**, **`GND`**, **`PE7 RX2`** (зворотний бік плати, центр, ліворуч від роз'єму шлейфа тачскріна, над квадратною мікросхемою). Фото: `knowledge/board_photos/photo_2026-11-04_10-04-00.jpg`.
-- Поруч є `PE9 RX3`, `PE8 TX3`, `GND` — це UART3, **не той**. Потрібен UART2.
-- Рівень сигналів процесора — 3,3 В (типово для F102; вимірювання на платі не робилось).
+- A USB-UART adapter, for example one based on the CH340G, set to **3.3 V** (never 5 V).
+- Three thin wires, ideally soldered to the pads (a hand-held probe often loses contact during boot).
+- A terminal program: PuTTY, Tera Term or any serial terminal.
 
-## Що потрібно
+## Wiring (frame switched off and unplugged)
 
-- Адаптер CH340G (USB-TTL), USB-кабель до ПК.
-- 3 тонкі дроти (краще припаяти до площадок; притиснуті щупи під час старту часто відходять і рвуть журнал).
-- Паяльник, флюс; мультиметр бажаний.
-- Штатний блок живлення рамки.
+Receiving only, which is enough for the boot log:
 
-## Крок 1. Драйвер CH340 на Windows
-
-1. Вставте адаптер у ПК (рамку поки не під'єднуйте).
-2. Відкрийте **Диспетчер пристроїв** (Win+X → Диспетчер пристроїв) → **Порти (COM і LPT)**. Має з'явитися `USB-SERIAL CH340 (COMx)`. Запам'ятайте номер `COMx`.
-3. Якщо пристрій зі знаком оклику або «Невідомий пристрій»: Windows 10/11 зазвичай ставить драйвер через Windows Update. Інакше встановіть офіційний драйвер виробника чипа WCH — `CH341SER.EXE` з сайту `wch-ic.com` (розділ Downloads → CH341SER). Драйвери з інших сайтів не беріть.
-
-## Крок 2. Термінал PuTTY
-
-1. Встановіть PuTTY з офіційного сайту (`putty.org` → посилання на сторінку автора `chiark.greenend.org.uk/~sgtatham/putty/`).
-2. Налаштування:
-   - **Session**: Connection type = **Serial**, Serial line = `COMx`, Speed = **115200**.
-   - **Connection → Serial**: Data bits 8, Stop bits 1, Parity None, **Flow control None**.
-   - **Session → Logging**: **All session output**, Log file name: `C:\PhotoFrame\logs\&Y&M&D-&T.log`, вибрати «Always append» або «Ask».
-   - **Terminal**: увімкнути «Implicit CR in every LF» (зручніше читати).
-   - Збережіть сесію як `frame-uart`.
-3. Створіть папку `C:\PhotoFrame\logs\`.
-
-Альтернатива — Tera Term (Serial, 115200, 8N1, File → Log).
-
-## Крок 3. Режим 3,3 В на адаптері
-
-- На багатьох платах CH340G є перемичка `3V3 / 5V`. Поставте **3V3**.
-- Перевірка мультиметром (адаптер у ПК, до рамки не під'єднаний): напруга між `TXD` і `GND` адаптера має бути ≈ 3,3 В. Якщо ≈ 5 В — TXD адаптера до рамки **не під'єднувати** (можна лише прийом, див. нижче).
-
-## Крок 4. Розпайка (рамка вимкнена й знеструмлена, USB від'єднано)
-
-**Етап А — лише прийом журналу (безпечний, почніть з нього):**
-
-| Адаптер CH340G | Плата рамки |
+| Adapter | Board |
 |---|---|
-| `GND` | `GND` (площадка біля `PE6 TX2`) |
+| `GND` | `GND` pad |
 | `RXD` | `PE6 TX2` |
-| `VCC` / `5V` / `3V3` | **нікуди не під'єднувати** |
-| `TXD` | поки не під'єднувати |
+| `VCC` | **not connected** (the frame has its own power) |
+| `TXD` | not connected |
 
-TX плати йде на RX адаптера (навхрест). Якщо журнал порожній — найчастіша причина в тому, що TX/RX переплутані: поміняйте місцями лише сигнальний дріт.
+TX goes to RX: the board's transmit pad connects to the adapter's receive pin. If the log is empty, check the ground, the solder contact, the COM port and the speed; as a last resort swap the signal wire to the other pad.
 
-**Етап Б — консоль з введенням команд (лише після підтвердження 3,3 В на TXD):**
+To type commands, also connect adapter `TXD` to `PE7 RX2`, but only after you have measured about 3.3 V on the adapter's TXD pin.
 
-| Адаптер | Плата |
+## Terminal settings
+
+115200 baud, 8 data bits, no parity, 1 stop bit, flow control **none**. Enable logging to a file. In PuTTY: Session → Connection type Serial, Logging → "All session output".
+
+## Capture a boot
+
+1. Open the terminal with the frame off.
+2. Power the frame on and wait 60–90 seconds. (If the frame is being flashed with the adapter attached, you will also see the flashing session and the first boot afterwards.)
+3. Save the log file.
+
+## What to look for
+
+| Line | Meaning |
 |---|---|
-| `TXD` | `PE7 RX2` |
+| `spinor flash id  : 0x…`, `spinor flash name: …` | flash chip (for example `0x204017`, `XM25QH64C`) |
+| `mipi id read ok: num 1 [0x98 0x81 0x1c 0x0]` | the panel ID read at boot |
+| `init ili9881_inx_f101a35` | the selected panel init branch (this branch is the one that was changed for variant B) |
+| `use lcd[auto_mipi] drv timing para` | the driver's built-in timing is used |
+| `vbp is too small…` | the timing table is invalid ([TECHNICAL_NOTES.md](TECHNICAL_NOTES.md)) |
+| `timeout` repeated | the display pipeline stops completing frames (seen with `lcd_dsi_if 2`) |
+| `create group home` | the interface started |
 
-Живлення: рамка — від штатного блока; адаптер — від USB ПК. Земля спільна через дріт GND.
+Examples: [`analysis/uart-logs`](../analysis/uart-logs).
 
-## Крок 5. Запис журналу завантаження
+## Console commands
 
-1. Рамка вимкнена. Адаптер під'єднаний до ПК і до площадок.
-2. Відкрийте PuTTY → сесія `frame-uart` → **Open**. Чорне вікно, порожнє.
-3. Увімкніть рамку штатним способом.
-4. Має піти текст. Чекайте 60–90 секунд (система встигає завантажити інтерфейс).
-5. Закрийте PuTTY. Файл журналу — у `C:\PhotoFrame\logs\`. Перейменуйте його зрозуміло, наприклад `frame2_v12a_boot1.log`.
-6. Повторіть ще раз (`…_boot2.log`) — два журнали показують, чи результат стабільний.
-
-Якщо замість тексту «сміття» (`���`) — перевірте швидкість 115200 і спільну землю. Якщо нічого — TX/RX, контакт пайки, номер COM.
-
-## Що шукати в журналі
-
-Рядки взято з ядра прошивки; дослівний вигляд на екрані може відрізнятися префіксами.
-
-| Шукати | Що означає |
-|---|---|
-| `spinor flash id  : 0x…` | JEDEC ID чипа flash (виробник + модель). **Записати** — потрібно для плану бекапу. |
-| `spinor flash name: …` | Назва чипа flash. **Записати.** |
-| `mipi id read ok: num … [0x.. 0x.. 0x.. 0x..]` | ID LCD-панелі, зчитаний автовизначенням. Рамка 2 очікувано `0x98 0x81 0x1c …`. |
-| `init ili9881_inx_f101a35` | Обрано гілку ILI9881 для ID `98 81 1C` — саме в ній у v12a/v12c стоїть таблиця JieLi. |
-| `init s8036_ili9881_fc`, `init jd9365da_h3_60hz`, `init boe_jd9365_h3_wxga_dsi_panel`, `init LCD_panel_init_m080_110b1_160` | Обрано іншу гілку (інший ID). |
-| `JD9365-H3 Panel init`, `TV096WXM Panel init` | Друк зсередини окремих драйверів. |
-| `fail`, `error`, `assert`, `exception`, `panic` | Помилки — цитувати повністю з 5 рядками до і після. |
-| `insmod`, `lvgl`, `lab done` | Етапи запуску застосунку (`lab done` — лише в образі лабораторії). |
-
-## Консоль RT-Thread (етап Б)
-
-Після завантаження натисніть Enter — має з'явитися запрошення (`msh >` або подібне).
-
-**Дозволені команди (лише читання):** `help`, `ps`, `list_thread`, `list_device`, `free`, `list_memheap`, `list_mempool`, `df`, `mount_table`, `ls`, `pwd`, `date`, `cpu_clock_print`, `norflash_size`, `top` (вихід — Ctrl+C або перезапуск), `list_timer`, `list_sem`, `list_mutex`, `list_event`, `list_mailbox`, `list_msgqueue`, `list_fd`.
-
-Корисні в першу чергу: `norflash_size`, `list_device`, `df`, `mount_table`, `free`, `ps`.
-
-**Заборонені без окремого рішення:** `format`, `mkfs`, `rm`, `mv`, `cp`, `mkdir`, `flash_lock`, `flash_unlock`, `m`, `p`, `insmod`, `uninsmod`, `sendkey`, `rgb_vcom`, `vcom_duty_from_flash`, `authe`, `authn`, `minitar_ext`, `unxz_file`, `unxz_file_pic`, `tttttt`, `sssss`, `amp`, `rtc_test`, `gsensor_sent_dir_test`, `test_dms_uart`, `usb_monitor`, `earphone_status`, `auth_get_part_size`. Частина з них змінює flash, файли чи апаратні параметри; призначення решти не встановлене.
-
-`reboot` безпечний, але для перезапуску краще вимикати живлення штатно.
-
-## Чи заважає CH340G прошиванню
-
-Ні: PhoenixSuit працює через інший USB-кабель. Адаптер можна не від'єднувати — тоді журнал першого запуску після прошивання запишеться одразу. Відкрийте PuTTY **до** завершення запису в PhoenixSuit.
+After the boot the frame offers an RT-Thread shell. Read-only commands that are safe: `help`, `ps`, `list_thread`, `list_device`, `free`, `df`, `ls`, `pwd`, `date`, `cpu_clock_print`, `norflash_size`. Avoid commands that write or format (`format`, `mkfs`, `rm`, `mv`, `cp`, `mkdir`, `flash_lock`, `flash_unlock`, `m`, `p`, `insmod`, `uninsmod`) unless you know exactly what they do. `reboot` is harmless.

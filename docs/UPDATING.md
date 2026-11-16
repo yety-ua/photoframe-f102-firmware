@@ -1,0 +1,96 @@
+# Updating the firmware (flashing guide)
+
+This guide installs a `smartframe.img` image on the frame with **PhoenixSuit**, the Allwinner flashing tool the seller supplies. It works for the custom mod images and for restoring the seller's original image. The procedure follows the seller's own instructions and has been used by the author many times on both known hardware variants.
+
+## 0. Read this first
+
+- **Pick the right image** for your panel: [Identify your frame](IDENTIFY_YOUR_FRAME.md). If you are unsure, flash the variant A image first.
+- The seller's procedure uses **full erase** (`全盘擦除升级`). It wipes the frame's internal flash: settings and all stored data, and, according to the PhoenixSuit manual, also data such as the serial number. These tools cannot back that flash up. Do not flash if you cannot accept losing it.
+- Do not unplug the cable, press Reset/Power or cut the power while the progress bar runs. 100% on the bar alone is not enough: wait for the final success message.
+- The flashing mode itself (the processor's built-in loader) is independent of what is stored on the frame, so a bad image can be replaced again as long as the cable and driver work.
+- Use at your own risk. This is an unofficial mod.
+
+## 1. What you need
+
+| Item | Notes |
+|---|---|
+| A Windows PC | PhoenixSuit is a Windows program. |
+| A USB data cable with **USB-A plugs on both ends** | The seller calls it a double-ended data cable. A charge-only cable will not work. |
+| The `smartframe.img` image | From [`firmware/`](../firmware). |
+| The seller's update package | Contains PhoenixSuit V2.0.7, the USB driver and the seller's instructions. Normally it came with the frame (a `.rar` archive). We do not redistribute it. |
+| The frame | With its power setup as shown in the seller's instruction video. |
+
+Files you will use from the seller's package (check your copies against these SHA-256 values; a different hash just means a different version):
+
+| File | SHA-256 |
+|---|---|
+| `PhoenixSuit_V2.0.7.zip` | `9705b2c0df51eb6554df2eb656e5a49993e0b48e4812f1f93e38fd321b94e55e` |
+| `usbdriver_V1.0.0.4.zip` | `f4e41c34dc8cbe7a05a8ff18fef8a648caabf7b771ffed47914b66c5b1190b4f` |
+| the package archive (`升级(1).rar`, 61 392 642 bytes) | `7fb422cb8b3574c594d9858e5f0c023fcfbf1e3b9ed73a8f36813f655adb78e4` |
+
+## 2. Prepare the PC (once)
+
+1. Create a simple working folder with a short ASCII path, for example `C:\PhotoFrame\`, and copy the image and the seller's files there.
+2. Unpack the USB driver archive and the PhoenixSuit archive completely (right-click, Extract All). Do not run PhoenixSuit from inside the zip file.
+3. Install the USB driver: in the unpacked driver folder run `InstallUSBDrv.bat` (right-click, Run as administrator if Windows asks).
+   - If Windows blocks the driver or the installation fails, stop and note the message. Do not disable Windows protection blindly; check that the unpacked folder is complete and try again.
+4. Start `PhoenixSuit.exe` from the fully unpacked PhoenixSuit folder (keep its DLL and configuration files next to it). Do not confuse it with `PhoenixInstall.exe`.
+
+## 3. Check the image
+
+Before every flash compare the SHA-256 of the file with the table in [`firmware/SHA256SUMS`](../firmware/SHA256SUMS).
+
+Windows (PowerShell):
+
+```powershell
+Get-FileHash C:\PhotoFrame\smartframe.img -Algorithm SHA256
+```
+
+macOS / Linux:
+
+```bash
+shasum -a 256 smartframe.img
+```
+
+If the value differs, do not flash that file.
+
+## 4. Flash
+
+PhoenixSuit's interface is partly in Chinese. The button names are given below.
+
+1. Switch the frame **off** and unplug the USB cable from the frame.
+2. In PhoenixSuit open the firmware update tab, labelled **`一键刷机`** (one-click flash).
+3. Click **`浏览`** (Browse) and select your `smartframe.img`. Check that the path shown in the program is the file you intend to flash. Select the image file itself, not the `.rar` archive and not individual `.fex` files.
+4. Select the mode **`全盘擦除升级`** (full erase upgrade), as the seller prescribes.
+   - The other modes are `保留数据升级` (keep data) and `分区擦除升级` (partition erase). Their effect on this image has not been verified; do not substitute them.
+5. Connect the PC end of the USB cable to the computer. Then **press and hold the Power button on the frame** and plug the other end of the cable into the frame's **USB-A port** (the port shown in the seller's video). Keep holding Power until PhoenixSuit detects the device, then release.
+   - Windows installs/recognises a new USB device at this moment. This is the flashing mode.
+6. PhoenixSuit may start straight away or show a confirmation. If it asks whether to erase the whole flash, check the image once more and confirm with **`是`** (Yes). Do not tick **`不再提示`** (do not ask again).
+   - If your PhoenixSuit version needs it, click **`立即升级`** (Upgrade now).
+7. Wait. During the process do not touch the cable or the frame. The tool reports success when the image is written and verified; then the frame restarts.
+8. Close PhoenixSuit, unplug the USB cable from the frame and start the frame with its normal power.
+
+## 5. First start
+
+- The first boot after a full erase formats the data partition, so it takes a little longer. Messages such as "data damage, will reformat data" in the boot log are normal.
+- Open **Settings → Language** and choose your language (the custom images add Ukrainian; English is available too).
+- Check the basics: main menu, touch, brightness, volume, photo/video playback, clock, alarm. Change one harmless setting, power the frame off and on and check that the setting is kept.
+
+## 6. If something goes wrong
+
+| Symptom | What to try |
+|---|---|
+| PhoenixSuit does not detect the frame | Use a data cable (not charge-only), the same USB-A port as in the seller's video, another PC USB port, and repeat step 5 starting from a switched-off frame. Check Device Manager for an unknown USB device and reinstall the driver (step 2.3). |
+| Flashing stops with an error | Write down the exact message and percentage. Replug and repeat from step 1. Endlessly repeating the erase is not a diagnosis; check cable, port and driver first. |
+| Static colour stripes, no menu | Wrong hardware variant. Flash the other image: see [Identify your frame](IDENTIFY_YOUR_FRAME.md). |
+| Black screen, backlight on | The system may still be starting (first boot is slower). If it stays black, flash the seller's stock image or the other variant and capture a [UART log](UART.md). |
+| No picture and no backlight | Check the frame's power supply, then repeat the flash. Flashing mode works independently of the stored software. |
+| Picture is fine but something looks wrong | Report it with a photo; see [Features and changes](FEATURES.md) for known limitations. |
+
+## 7. Going back to the original firmware
+
+Flash [`firmware/stock/seller-2026-10-16/smartframe.img`](../firmware/stock/seller-2026-10-16) with the same procedure. The stock image works on variant A frames only; on variant B frames it shows stripes. For a variant B frame the safe known-good image is the variant B custom image.
+
+## 8. Optional: watch the boot log
+
+A USB-UART adapter (CH340G or similar, 3.3 V) connected to the board's UART2 pads shows what the frame is doing, including the panel ID and the flash chip model. See [UART.md](UART.md).

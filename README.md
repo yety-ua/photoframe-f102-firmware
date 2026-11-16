@@ -1,60 +1,77 @@
-# Прошивка для фоторамок YD_F102_MIPI_V3.0 (Allwinner F102, Melis RTOS)
+# Photo frame firmware mod for YD_F102_MIPI_V3.0 (Allwinner F102)
 
-> **English summary.** Custom firmware images (light UI theme, Ukrainian language) for two photo frames built on the same board (`YD_F102_MIPI_V3.0`, Allwinner F102) but with **different LCD panels**. The images differ only in the panel-init code for panel ID `98 81 1C`. Includes the build tools (pure Python), the panel-table corpus, UART/flashing notes and the analysis behind the frame-2 fix. **Private repository: see "Права" before changing visibility.**
+Custom firmware images for photo frames built on the **YD_F102_MIPI_V3.0** board (Allwinner F102, Melis RTOS), plus the original seller firmware, flashing instructions and the tools used to build the images.
 
-## Які образи для якої рамки
+The mod gives the frame a light interface, adds the **Ukrainian** language and fixes a number of unreadable screens. It also contains a fix that makes frames with an **HT101D08S / JDH328DK0** screen work, which did not start with the seller's firmware (static colour stripes).
 
-| | Рамка 1 | Рамка 2 |
+![Main menu](docs/images/home-en.png)
+
+| Main menu | Settings |
+|---|---|
+| ![Main menu, Ukrainian](docs/images/home-uk.png) | ![Settings](docs/images/settings-en.png) |
+
+> The pictures are **preview renders** assembled from the firmware's own image files and the screen layout read from its code. They are not photos of a device. More screens and details: [docs/FEATURES.md](docs/FEATURES.md).
+
+## Which file do I need?
+
+Frames with this board come with **different LCD panels**, and the panel decides which image works. Two variants are known:
+
+| Hardware variant | Panel marking | Stock seller firmware | Custom mod |
+|---|---|---|---|
+| **A** | `K101-IM2CYL02-L` | works | [`custom/variant-a_k101-im2cyl02-l`](firmware/custom/variant-a_k101-im2cyl02-l) |
+| **B** | `HT101D08S` / `JDH328DK0` (flex cable marking `SY31P 2021.11.15`) | **does not work** (static stripes) | [`custom/variant-b_ht101d08s`](firmware/custom/variant-b_ht101d08s) |
+
+Not sure which one you have? Read **[Identify your frame](docs/IDENTIFY_YOUR_FRAME.md)**. In short: open the back cover and read the panel marking, or flash variant A first (it is harmless on variant B; you will just see stripes) and look at the screen.
+
+**Never flash the variant B image on a variant A frame or the other way round.** In the author's experience a wrong image does not stop the frame from being flashed again (the flashing mode is built into the processor; more than twenty test images, including ones with a black screen, were replaced without problems), but the screen stays broken until you flash the right one.
+
+## Firmware images
+
+| Image | For | SHA-256 |
 |---|---|---|
-| LCD-панель | `K101-IM2CYL02-L` | `HT101D08S` / `JDH328DK0` (шлейф `SY31P 2021.11.15`) |
-| ID панелі (UART) | не знято | `98 81 1C 00` |
-| Образ | [`firmware/F1_v11k_current_frame1/smartframe.img`](firmware/F1_v11k_current_frame1) | [`firmware/F2_RELEASE_k101_stock_timing/smartframe.img`](firmware/F2_RELEASE_k101_stock_timing) |
-| SHA-256 | `784eb0582048ad1a203c709ab5a0a38d32758380b527c8732ec7ac9d36036d81` | `33c979a951969a9bc11d1043bcdebf07d3597e21359ef17ea8f766df2415f25b` |
-| Статус | працює на пристрої | працює на пристрої (16.11.2026) |
-| Ядро | заводське 16.10 без змін | заводське 16.10 + інша ініціалізація панелі |
+| [`firmware/stock/seller-2026-10-16`](firmware/stock/seller-2026-10-16) | original, unmodified seller image (variant A only) | `f9ed6a46a22f82b71cb6fe63e1f3ce9ac780665fbb0c1967e694c43a7c593fa0` |
+| [`firmware/custom/variant-a_k101-im2cyl02-l`](firmware/custom/variant-a_k101-im2cyl02-l) | custom mod, variant A | `784eb0582048ad1a203c709ab5a0a38d32758380b527c8732ec7ac9d36036d81` |
+| [`firmware/custom/variant-b_ht101d08s`](firmware/custom/variant-b_ht101d08s) | custom mod, variant B | `33c979a951969a9bc11d1043bcdebf07d3597e21359ef17ea8f766df2415f25b` |
 
-**Образ однієї рамки не можна шити в іншу.** Контрольні суми: [`firmware/SHA256SUMS`](firmware/SHA256SUMS).
+Each folder contains one file, `smartframe.img`. More about the options: [firmware/README.md](firmware/README.md).
 
-```bash
-cd firmware && shasum -a 256 -c SHA256SUMS        # macOS / Linux
-```
-```powershell
-Get-FileHash firmware\F2_RELEASE_k101_stock_timing\smartframe.img -Algorithm SHA256   # Windows
-```
+## How to install
 
-## Що в образі
-Світла тема «жорстка тінь», українська мова замість російської, власна заставка, плитки головного екрана 208×192, виправлені календар, будильник і годинник. Інтерфейс однаковий для обох рамок.
+Full step-by-step guide: **[docs/UPDATING.md](docs/UPDATING.md)**. The short version:
 
-## Чим відрізняються образи (екран)
-Лише кодом ініціалізації панелі ILI9881 для ID `98 81 1C`: одна ділянка ядра (3766 байтів). Таймінг, режим DSI, конфіг і весь інтерфейс однакові. Заводська таблиця й таблиця K101 розходяться в 101 із 180 спільних регістрів (GIP, живлення, гама). Розбір: [`docs/FRAMES_SCREEN_DIFF.md`](docs/FRAMES_SCREEN_DIFF.md), дані: [`analysis/frame-screen-diff`](analysis/frame-screen-diff).
+1. Identify your hardware variant and take the matching `smartframe.img`.
+2. On a Windows PC install the seller's USB driver and start PhoenixSuit (both come in the seller's update package; see the guide).
+3. Select the image, choose the full-erase mode, put the frame into flashing mode (hold **Power** while plugging the USB cable in) and wait for the success message.
+4. Set the language in Settings.
 
-Рецепт рамки 2: таблиця `linux_k101_im2byl02_init` + заводський таймінг `dclk 73, ht 890, hbp 25, hspw 20, vt 1340, vbp 20, vspw 4` (61,21 Гц).
+**Warning.** Flashing uses the *full erase* mode, which wipes the frame's internal flash, including all settings and any data stored there. There is no way to back up that flash with these tools. Use at your own risk; read the guide first.
 
-## Документація
-- [`docs/FRAMES.md`](docs/FRAMES.md): довідник про обидві рамки, історія, що перевірено, відкриті питання.
-- [`docs/FLASHING.md`](docs/FLASHING.md): як прошити (PhoenixSuit, Windows).
-- [`docs/UART.md`](docs/UART.md): журнал завантаження через CH340G (UART2).
-- [`build_kit/README_BUILD.md`](build_kit/README_BUILD.md): збирання образів.
-- [`analysis/uart-logs`](analysis/uart-logs): журнал успішного запуску рамки 2 і журнал, що показує чому `lcd_dsi_if=2` не підходить.
+## Status
 
-## Збирання образів
-Чистий Python (потрібен лише `liblzma` ≥ 5.4 для стиснення ядра в форматі LZMA1EXT). Окремий образ на кожну рамку:
+| Item | Status |
+|---|---|
+| Stock image on a variant A frame | confirmed working |
+| Custom mod, variant A | confirmed working on the author's frame |
+| Custom mod, variant B | confirmed working on the author's frame (16 Nov 2026) |
+| Stock image on a variant B frame | does not work (stripes) |
+| Other panels using the same board | unknown: reports welcome |
+| One image for both variants | not available yet, see [Identify your frame](docs/IDENTIFY_YOUR_FRAME.md#one-image-for-both-variants) |
 
-```powershell
-python build_kit\tools\check_env.py
-python build_kit\tools\make_variant.py --frame 1 --name <версія> --base <образ інтерфейсу>
-python build_kit\tools\make_variant.py --frame 2 --name <версія> --base <образ інтерфейсу>
-```
-Результат: `build_kit/out/F1_<версія>/` і `build_kit/out/F2_<версія>/`. Профіль перевіряє, що база має заводське ядро, і для рамки 2 накладає рецепт. Для режиму `--frame` потрібен заводський образ продавця (див. нижче), покладений у `firmware/A_stock_seller_2026-10-16/smartframe.img`.
+## Documentation
 
-## Чого тут немає
-- Образу продавця `smartframe.img` (16.10.2026, SHA-256 `f9ed6a46a22f82b71cb6fe63e1f3ce9ac780665fbb0c1967e694c43a7c593fa0`), PhoenixSuit і USB-драйвера: це файли продавця, їх не розповсюджуємо. Образ потрібен лише для перевірок `--frame` і самотесту.
-- Зміни інтерфейсу (PNG, `lvgl.mod`, мови, заставка) збираються окремо на Mac і сюди не входять; тут лише готові образи.
+- [Identify your frame](docs/IDENTIFY_YOUR_FRAME.md): hardware variants and how to tell them apart.
+- [Updating the firmware](docs/UPDATING.md): complete flashing guide, troubleshooting, restoring the original.
+- [Features and changes](docs/FEATURES.md): what the mod changes and what it does not.
+- [Panel init difference](docs/PANEL_INIT_DIFFERENCE.md): what exactly differs between the two images.
+- [Technical notes](docs/TECHNICAL_NOTES.md): hardware facts, how the screen problem was solved, what was verified.
+- [UART log](docs/UART.md): reading the boot log with a USB-UART adapter (optional).
+- [Building images](docs/BUILDING.md): the pure-Python build kit (`build_kit/`).
+- [analysis/](analysis): logs and data behind the findings.
 
-## Статус і відкриті питання
-1. Знати ID панелі рамки 1 (UART-журнал): якщо він теж `98 81 1C`, патч рамки 2 їй зашкодить; якщо інший, обидва образи можна об'єднати.
-2. Перший новий образ інтерфейсу з профілем рамки 2 потрібно перевірити на пристрої.
-3. Повільні мініатюри фото (код мініатюр заводський).
+## Rights and legal
 
-## Права
-Репозиторій **приватний**. Образи є похідними від прошивки продавця (ядро, застосунок, ресурси), тому перед будь-яким відкриттям репозиторію потрібно з'ясувати права на розповсюдження цих файлів. Власна ліцензія на код у `build_kit` і `analysis_tools` не обрана. Таблиці ініціалізації в `build_kit/data/corpus.json` походять із відкритих драйверів (Linux, Seeed, JieLi/Tuya, Allwinner BSP, CanMV, Milk-V тощо) під їхніми ліцензіями; джерела вказані в полях `source`.
+The images are **derived from the seller's firmware** (kernel, application, resources). The original seller image is included unmodified so that you can restore it. The repository is currently private; before making it public the right to redistribute these files needs to be clarified. PhoenixSuit and the USB driver belong to their authors and are not included; see the guide for how to obtain them.
+
+No licence has been chosen for the scripts in `build_kit/` and `analysis_tools/` yet. The panel init tables in `build_kit/data/corpus.json` come from open drivers (Linux kernel, Seeed Studio, JieLi/Tuya, Allwinner BSP, CanMV, Milk-V and others) under their own licences; the `source` field of each table names its origin.
+
+This is an unofficial community project with no warranty, not affiliated with the seller or the chip vendor.

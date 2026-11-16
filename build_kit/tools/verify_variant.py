@@ -92,10 +92,11 @@ def main():
     ap.add_argument("image")
     ap.add_argument("--base", help="reference image to diff against")
     ap.add_argument("--json", action="store_true")
-    ap.add_argument("--frame", choices=["1", "2"], help="check against a frame profile (needs --stock)")
+    ap.add_argument("--frame", choices=["a", "b", "1", "2"], help="check against a hardware-variant profile: a (stock kernel) or b (panel recipe); 1/2 are aliases (needs --stock)")
     ap.add_argument("--stock", help="stock seller 16.10 image (kernel reference for --frame)")
-    ap.add_argument("--recipe-timing", help="expected dclk,ht,hbp,hspw,vt,vbp,vspw for --frame 2")
+    ap.add_argument("--recipe-timing", help="expected dclk,ht,hbp,hspw,vt,vbp,vspw for the variant B profile")
     a = ap.parse_args()
+    a.frame = {"1": "a", "2": "b"}.get(a.frame, a.frame)
     img = open(a.image, "rb").read()
     r = analyse(img)
     lines = [f"image   : {a.image}", f"sha256  : {r['sha256']}", f"size    : {len(img)}",
@@ -132,14 +133,14 @@ def main():
             d = [i for i in range(min(len(sk), len(ik))) if sk[i] != ik[i]] if len(sk) == len(ik) else None
             allowed = lambda i: 0x810AE <= i < 0x81F94 or 0x10E7F0 <= i < 0x10E802
             same_cfg = st["config"] == r["config"]
-            if a.frame == "1":
+            if a.frame == "a":
                 ok1 = d == [] and same_cfg
-                lines.append(f"frame 1 : kernel identical to stock = {d == []}, config identical to stock = {same_cfg}")
+                lines.append(f"variant A: kernel identical to stock = {d == []}, config identical to stock = {same_cfg}")
                 if not ok1:
-                    r["ok"] = False; r["problems"].append("FRAME 1 image must have the stock kernel and config; this one is patched: do NOT flash on frame 1")
+                    r["ok"] = False; r["problems"].append("a variant-A image must have the stock kernel and config; this one is patched: do NOT flash it on a variant-A frame")
             else:
                 ok2 = d is not None and all(allowed(i) for i in d) and bool(d) and same_cfg
-                lines.append(f"frame 2 : kernel differs from stock only in init-routine slot/timing table = {d is not None and all(allowed(i) for i in d)}, "
+                lines.append(f"variant B: kernel differs from stock only in init-routine slot/timing table = {d is not None and all(allowed(i) for i in d)}, "
                              f"patched = {bool(d)}, config identical to stock = {same_cfg}")
                 if a.recipe_timing:
                     dclk, ht, hbp, hspw, vt, vbp, vspw = (int(x) for x in a.recipe_timing.split(","))
@@ -147,7 +148,7 @@ def main():
                     lines.append(f"recipe timing match = {r.get('timing') == want}")
                     ok2 = ok2 and r.get("timing") == want
                 if not ok2:
-                    r["ok"] = False; r["problems"].append("frame 2 profile check failed")
+                    r["ok"] = False; r["problems"].append("variant-B profile check failed")
     lines.append("RESULT  : " + ("PASS (structure only; device boot is untested)" if r["ok"] else "FAIL: " + "; ".join(r["problems"])))
     print("\n".join(lines))
     if a.json:
