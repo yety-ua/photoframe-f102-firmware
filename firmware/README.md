@@ -1,6 +1,6 @@
 # Firmware images
 
-Every folder holds one file named `smartframe.img` (an Allwinner IMAGEWTY image, about 6 MB). Flash it with PhoenixSuit: [docs/UPDATING.md](../docs/UPDATING.md). Checksums: [`SHA256SUMS`](SHA256SUMS).
+These images are for the 10.1-inch Digital Calendar with Schedule Management, model HY-XKSZ-10.1 (case label), board YD_F102_MIPI_V3.0. Every folder holds one file named `smartframe.img` (an Allwinner IMAGEWTY image, about 6 MB). Flash it with PhoenixSuit: [docs/UPDATING.md](../docs/UPDATING.md). Checksums: [`SHA256SUMS`](SHA256SUMS).
 
 | Folder | What it is | Works on | SHA-256 |
 |---|---|---|---|

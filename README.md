@@ -1,4 +1,6 @@
-# Photo frame firmware mod for YD_F102_MIPI_V3.0 (Allwinner F102)
+# Firmware mod for the 10.1-inch Digital Calendar with Schedule Management (HY-XKSZ-10.1)
+
+Photo frame / digital calendar on the **YD_F102_MIPI_V3.0** board (Allwinner F102, Melis RTOS). Case label: **10.1-inch Digital Calendar with Schedule Management, Model: HY-XKSZ-10.1**.
 
 Custom firmware images for photo frames built on the **YD_F102_MIPI_V3.0** board (Allwinner F102, Melis RTOS), plus the original seller firmware, everything needed to flash it (PhoenixSuit, the USB driver, a step-by-step guide) and the tools used to build the images.
 
@@ -11,6 +13,17 @@ The mod gives the frame a light interface, adds the **Ukrainian** language and f
 | ![Main menu, Ukrainian](docs/images/home-uk.png) | ![Settings](docs/images/settings-en.png) |
 
 > The pictures are **preview renders** assembled from the firmware's own image files and the screen layout read from its code. They are not photos of a device. More screens and details: [docs/FEATURES.md](docs/FEATURES.md).
+
+## Which devices is this for?
+
+The original label on the back of the case reads:
+
+> 10.1-inch Digital Calendar with Schedule Management
+> Model: HY-XKSZ-10.1
+
+Inside such a device the author found the **YD_F102_MIPI_V3.0** board (Allwinner F102 processor, SPI NOR flash XM25QH64C, GSL1680 touch controller) with a 10.1-inch 800×1280 MIPI panel. If your device carries this label, or you opened it and see the same board, this repository is for you. Whether the case label differs between the panel variants below is not known, so do **not** use it to choose the image; use the panel marking or the test in [Identify your frame](docs/IDENTIFY_YOUR_FRAME.md).
+
+Search terms: HY-XKSZ-10.1, 10.1 inch digital calendar, schedule management photo frame, YD_F102_MIPI_V3.0, Allwinner F102, Melis, PhoenixSuit, smartframe.img.
 
 ## Which file do I need?
 

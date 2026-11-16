@@ -1,6 +1,6 @@
 # Updating the firmware (flashing guide)
 
-This guide installs a `smartframe.img` image on the frame with **PhoenixSuit**, the Allwinner flashing tool the seller supplies. It works for the custom mod images and for restoring the seller's original image. The procedure follows the seller's own instructions and has been used by the author many times on both known hardware variants.
+This guide installs a `smartframe.img` image on the frame (10.1-inch Digital Calendar with Schedule Management, model HY-XKSZ-10.1, board YD_F102_MIPI_V3.0) with **PhoenixSuit**, the Allwinner flashing tool the seller supplies. It works for the custom mod images and for restoring the seller's original image. The procedure follows the seller's own instructions and has been used by the author many times on both known hardware variants.
 
 ## 0. Read this first
 

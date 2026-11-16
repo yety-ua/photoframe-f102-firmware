@@ -1,6 +1,6 @@
 # Identify your frame (hardware variants)
 
-Frames built on the **YD_F102_MIPI_V3.0** board look identical from the outside and run the same software, but they are sold with **different LCD panels**. The seller's firmware picks the panel setup automatically by reading an ID from the panel, and for one known panel that setup is wrong. So the correct image depends on the panel, not on the frame's outside.
+Devices sold as the **10.1-inch Digital Calendar with Schedule Management, Model HY-XKSZ-10.1** (the label on the back of the case) are built on the **YD_F102_MIPI_V3.0** board. They look identical from the outside and run the same software, but they are sold with **different LCD panels**. The seller's firmware picks the panel setup automatically by reading an ID from the panel, and for one known panel that setup is wrong. So the correct image depends on the panel, not on the frame's outside.
 
 ## Known variants
 
@@ -11,7 +11,7 @@ Frames built on the **YD_F102_MIPI_V3.0** board look identical from the outside 
 | Seller's original firmware | works | static colour stripes, no usable picture |
 | Image to use | [`custom/variant-a_k101-im2cyl02-l`](../firmware/custom/variant-a_k101-im2cyl02-l) (or the stock image) | [`custom/variant-b_ht101d08s`](../firmware/custom/variant-b_ht101d08s) |
 
-Both variants are 10.1-inch 800×1280 MIPI panels mounted in landscape; the interface is drawn at 1280×800. Other panels may exist on the same board. If yours is neither of the two, see [Other panels](#other-panels).
+The case label alone cannot be used to choose the image (it is not known whether it differs between the variants). Both variants are 10.1-inch 800×1280 MIPI panels mounted in landscape; the interface is drawn at 1280×800. Other panels may exist on the same board. If yours is neither of the two, see [Other panels](#other-panels).
 
 ## How to tell which one you have
 
