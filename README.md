@@ -29,7 +29,7 @@ Search terms: HY-XKSZ-10.1, 10.1 inch digital calendar, schedule management phot
 
 Frames with this board come with **different LCD panels**, and the panel decides which image works. Two variants are known:
 
-| Hardware variant | Panel marking | Stock seller firmware | Custom mod |
+| Hardware variant | Panel marking | Seller's original firmware (16 Oct) | Custom mod |
 |---|---|---|---|
 | **A** | `K101-IM2CYL02-L` | works | [`custom/variant-a_k101-im2cyl02-l`](firmware/custom/variant-a_k101-im2cyl02-l) |
 | **B** | `HT101D08S` / `JDH328DK0` (flex cable marking `SY31P 2021.11.15`) | **does not work** (static stripes) | [`custom/variant-b_ht101d08s`](firmware/custom/variant-b_ht101d08s) |
@@ -43,6 +43,8 @@ Not sure which one you have? Read **[Identify your frame](docs/IDENTIFY_YOUR_FRA
 | Image | For | SHA-256 |
 |---|---|---|
 | [`firmware/stock/seller-2026-10-16`](firmware/stock/seller-2026-10-16) | original, unmodified seller image (variant A only) | `f9ed6a46a22f82b71cb6fe63e1f3ce9ac780665fbb0c1967e694c43a7c593fa0` |
+| [`firmware/stock/seller-2026-10-29`](firmware/stock/seller-2026-10-29) | seller's later build with Ukrainian, fixed JD9365 panel driver (not working on variant B, untested on A) | `57be7bfb6468169d73e1ae27197c85b7aa359970b38253bc6dd38fc397b31c8f` |
+| [`firmware/stock/seller-2026-11-02`](firmware/stock/seller-2026-11-02) | seller's later build with Ukrainian, fixed INX ILI9881C panel driver (not working on variant B, untested on A) | `73befb007ad62b73d3d75a94b0562e3fc25e2afbbaa688e4e7aaddc00d0da998` |
 | [`firmware/custom/variant-a_k101-im2cyl02-l`](firmware/custom/variant-a_k101-im2cyl02-l) | custom mod, variant A | `784eb0582048ad1a203c709ab5a0a38d32758380b527c8732ec7ac9d36036d81` |
 | [`firmware/custom/variant-b_ht101d08s`](firmware/custom/variant-b_ht101d08s) | custom mod, variant B | `33c979a951969a9bc11d1043bcdebf07d3597e21359ef17ea8f766df2415f25b` |
 
@@ -66,7 +68,8 @@ Full step-by-step guide: **[docs/UPDATING.md](docs/UPDATING.md)**. The short ver
 | Stock image on a variant A frame | confirmed working |
 | Custom mod, variant A | confirmed working on the author's frame |
 | Custom mod, variant B | confirmed working on the author's frame (16 Nov 2026) |
-| Stock image on a variant B frame | does not work (stripes) |
+| Seller's original image on a variant B frame | does not work (stripes) |
+| Seller's 29 Oct / 2 Nov builds | variant B: black screen / stripes; variant A: not tested |
 | Other panels using the same board | unknown: reports welcome |
 | One image for both variants | not available yet, see [Identify your frame](docs/IDENTIFY_YOUR_FRAME.md#one-image-for-both-variants) |
 
@@ -84,7 +87,7 @@ Full step-by-step guide: **[docs/UPDATING.md](docs/UPDATING.md)**. The short ver
 
 ## Rights and legal
 
-The images are **derived from the seller's firmware** (kernel, application, resources). The original seller image is included unmodified so that you can restore it. The files in `flashing-tools/` (PhoenixSuit, the USB driver, the demonstration video) are the seller's unmodified files and belong to their authors. The repository is currently private; **before making it public the right to redistribute all of these files has to be clarified**, and the third-party files may have to be removed or replaced by download instructions.
+The images are **derived from the seller's firmware** (kernel, application, resources). The original seller image and the seller's two later builds are included unmodified so that you can restore or choose them. The files in `flashing-tools/` (PhoenixSuit, the USB driver, the demonstration video) are the seller's unmodified files and belong to their authors. The repository is currently private; **before making it public the right to redistribute all of these files has to be clarified**, and the third-party files may have to be removed or replaced by download instructions.
 
 No licence has been chosen for the scripts in `build_kit/` and `analysis_tools/` yet. The panel init tables in `build_kit/data/corpus.json` come from open drivers (Linux kernel, Seeed Studio, JieLi/Tuya, Allwinner BSP, CanMV, Milk-V and others) under their own licences; the `source` field of each table names its origin.
 

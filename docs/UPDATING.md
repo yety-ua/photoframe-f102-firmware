@@ -91,7 +91,7 @@ PhoenixSuit's interface is partly in Chinese. The button names are given below.
 
 ## 7. Going back to the original firmware
 
-Flash [`firmware/stock/seller-2026-10-16/smartframe.img`](../firmware/stock/seller-2026-10-16) with the same procedure. The stock image works on variant A frames only; on variant B frames it shows stripes. For a variant B frame the safe known-good image is the variant B custom image.
+Flash [`firmware/stock/seller-2026-10-16/smartframe.img`](../firmware/stock/seller-2026-10-16) with the same procedure. The original image works on variant A frames only; on variant B frames it shows stripes. The seller's later builds of 29 Oct and 2 Nov are in the same `firmware/stock/` folder; they use a fixed panel driver and are not verified on variant A (see [firmware/README.md](../firmware/README.md#the-sellers-later-builds-29-oct-and-2-nov-2026)). For a variant B frame the safe known-good image is the variant B custom image.
 
 ## 8. Optional: watch the boot log
 
