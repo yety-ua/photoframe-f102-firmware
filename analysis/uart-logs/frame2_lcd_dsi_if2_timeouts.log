@@ -1,0 +1,513 @@
+=~=~=~=~=~=~=~=~=~=~=~= PuTTY log 2026.11.16 14:16:31 =~=~=~=~=~=~=~=~=~=~=~=
+......
+
+
+[136]HELLO! BOOT0 is starting!
+[139]BOOT0 commit : {ef5e8829}
+[142]set pll start
+[144]set pll end
+[146]ic board init ok
+[150]get gpadc_vol:1164
+[152]user gpadc_vol <= 1164, to burn
+[155]Failed preparing the second boot
+[3190]fes begin commit:{bb6696be}
+[3193]set pll start
+[3195]set pll end
+[3197]ic board init ok
+[3199]beign to init dram
+[3201]DRAM: trying user param set 1/2
+[3205]ZQ value = 0x808
+[3207]get_pmu_exist() = -1
+[3209]DRAM BOOT DRIVE INFO: V0.30
+[3213]DRAM CLK = 384 MHz
+[3215]DRAM Type = 2 (2:DDR2,3:DDR3)
+[3218]DRAMC read ODT off.
+[3221]DRAM ODT off.
+[3223]mark_id=0x6f00, ddr_type=0
+[3226]DRAM SIZE = 128 MBytes, para1 = 10d2, para2 = 800000
+[3231]DRAM simple test FAIL.
+[3234]0 != fedcba98 at address 44000000
+[3238]DRAM: param set 0 failed
+[3240]DRAM: trying user param set 2/2
+[3244]ZQ value = 0x808
+[3246]get_pmu_exist() = -1
+[3249]mark_id=0x6f00, ddr_type=0
+[3253][AUTO DEBUG] single rank and full DQ
+[3257]mark_id=0x6f00, ddr_type=0
+[3260][AUTO DEBUG] rank 0 row = 13 
+[3264][AUTO DEBUG] rank 0 bank = 8 
+[3267][AUTO DEBUG] rank 0 page size = 2 KB 
+[3271]DRAM BOOT DRIVE INFO: V0.30
+[3274]DRAM CLK = 408 MHz
+[3276]DRAM Type = 3 (2:DDR2,3:DDR3)
+[3280]DRAMC ZQ value: 0x7b7bfb
+[3282]DRAM ODT value: 0x40.
+[3285]mark_id=0x6f00, ddr_type=0
+[3289]DRAM SIZE = 128 MBytes, para1 = 10d2, para2 = 800010
+[3296]DRAM simple test OK.
+[3299]0x4338c4
+[3300]0x0
+[3301]DRAM: param set 1 succeeded, size=128MB
+[3305]init dram ok
+
+
+U-Boot 2018.07 (Aug 06 2026 - 10:58:56 +0000) Allwinner Technology
+
+[04.196]DRAM:  128 MiB
+[04.206]Relocation Offset is: 07f4b000, reloc addr is: 47f9b000
+[04.233]secure enable bit: 0
+[04.237]CPU=696 MHz,PLL6=600 Mhz,AHB=200 Mhz, APB1=100Mhz  MBus=408Mhz
+[04.243]sunxi flash map init
+SPI ALL:   ready
+[04.287]init_clocks:finish
+[04.289]flash init start
+[04.291]workmode = 16,storage type = 0
+not support storage_type -1, default set card_no to 2 
+try card 2
+set card number 2
+get card number 2
+[04.307][mmc]: mmc driver ver uboot2018:2025-10-21 14:19:00
+[04.317][mmc]: get sdc_type fail and use default host:tm4.
+[04.353][mmc]: Is not Boot mode!
+[04.356][mmc]: SUNXI SDMMC Controller Version:0x50310
+[04.363][mmc]: 200 MHz...
+[04.366][mmc]: sample: 19 - 131(ps)
+[04.369][mmc]: ds: 19 - 131(ps)
+[04.375][mmc]: ************Try SD card 2************
+[04.380][mmc]: mmc 2 cmd timeout 100 status 100
+[04.385][mmc]: smc 2 err, cmd 8,  RTO
+[04.388][mmc]: mmc 2 close bus gating and reset
+[04.393][mmc]: mmc 2 cmd timeout 100 status 100
+[04.397][mmc]: smc 2 err, cmd 55,  RTO
+[04.401][mmc]: mmc 2 close bus gating and reset
+[04.405][mmc]: ************Try MMC card 2************
+[04.414][mmc]: mmc 2 cmd timeout 100 status 100
+[04.418][mmc]: smc 2 err, cmd 1,  RTO
+[04.421][mmc]: mmc 2 close bus gating and reset
+[04.426][mmc]: Card did not respond to voltage select!
+[04.431][mmc]: ************SD/MMC 2 init error!************
+[04.436][mmc]: mmc init product failed
+MMC init failed
+try emmc fail
+spinor unlock_va1l=0x0
+spinor unlock_val2=0xa
+[04.975]spi sunxi_slave->max_hz:100000000 
+[05.997]Sample mode:0 start:5 end:63 right_sample_delay:0x22
+SF: Detected XM25QH64C( ) with page size 256 Bytes, erase size 64 KiB, total 8 MiB
+[06.550]Loading Environment from SUNXI_FLASH... OK
+Hit any key to stop autoboot:  0 
+sunxi work mode=0x10
+run usb efex
+USB2.0 controller init !
+delay time 2500
+usb init ok
+set address 0x2
+set address 0x2 ok
+SUNXI_EFEX_ERASE_TAG
+erase_flag = 0x12
+origin_erase_flag = 0x1
+FEX_CMD_fes_verify_status
+FEX_CMD_fes_verify last err=0
+the 0 mbr table is ok
+*************MBR DUMP***************
+total mbr part 3
+
+part[0] name      :bootA
+part[0] classname :DISK
+part[0] addrlo    :0x20
+part[0] lenlo     :0x580
+part[0] user_type :32768
+part[0] keydata   :0
+part[0] ro        :1
+
+part[1] name      :ROOTFS
+part[1] classname :DISK
+part[1] addrlo    :0x5a0
+part[1] lenlo     :0x1980
+part[1] user_type :32768
+part[1] keydata   :0
+part[1] ro        :1
+
+part[2] name      :UDISK
+part[2] classname :DISK
+part[2] addrlo    :0x1f20
+part[2] lenlo     :0x0
+part[2] user_type :32768
+part[2] keydata   :0
+part[2] ro        :0
+
+need erase flash: 18
+The Chip Erase size is: 8M ...
+SUNXI_EFEX_MBR_TAG
+mbr size = 0x4000
+SF: write offset not multiple of erase size
+write primary GPT success
+spinor: skip backup GPT
+[13.495]update partition map
+FEX_CMD_fes_verify_status
+FEX_CMD_fes_verify last err=0
+FEX_CMD_fes_verify_value, start 0x20, size high 0x0:low 0xac000
+FEX_CMD_fes_verify_value 0x3c1b843d
+FEX_CMD_fes_verify_value, start 0x5a0, size high 0x0:low 0x31be00
+FEX_CMD_fes_verify_value 0xf00ddcbe
+bootfile_mode=4
+SUNXI_EFEX_BOOT1_TAG
+boot1 size = 0x80000, max size = 0x200000
+uboot size = 0x80000
+storage type = 3
+FEX_CMD_fes_verify_status
+FEX_CMD_fes_verify last err=0
+bootfile_mode=4
+SUNXI_EFEX_BOOT0_TAG
+boot0 size = 0xa000
+storage type = 3
+FEX_CMD_fes_verify_status
+FEX_CMD_fes_verify last err=0
+sunxi_efex_next_action=2
+exit usb
+next work 2
+SUNXI_UPDATE_NEXT_ACTION_REBOOTú......
+
+
+[136]HELLO! BOOT0 is starting!
+[139]BOOT0 commit : {ef5e8829}
+[142]set pll start
+[144]set pll end
+[146]ic board init ok
+[149]get gpadc_vol:1698
+[152]set spi freq:100000000
+[155]spi sample_mode:0 sample_delay:22
+[160]spinor id is: 20 40 17, read cmd: 3b
+[164]DRAM: trying user param set 1/2
+[168]ZQ value = 0x808
+[170]get_pmu_exist() = -1
+[172]DRAM BOOT DRIVE INFO: V0.30
+[175]DRAM CLK = 384 MHz
+[178]DRAM Type = 2 (2:DDR2,3:DDR3)
+[181]DRAMC read ODT off.
+[183]DRAM ODT off.
+[186]mark_id=0x6f00, ddr_type=0
+[189]DRAM SIZE = 128 MBytes, para1 = 10d2, para2 = 800010
+[195]DRAM simple test FAIL.
+[197]0 != fedcba98 at address 44000000
+[201]DRAM: param set 0 failed
+[204]DRAM: trying user param set 2/2
+[207]ZQ value = 0x808
+[209]get_pmu_exist() = -1
+[212]mark_id=0x6f00, ddr_type=0
+[216][AUTO DEBUG] single rank and full DQ
+[220]mark_id=0x6f00, ddr_type=0
+[224][AUTO DEBUG] rank 0 row = 13 
+[227][AUTO DEBUG] rank 0 bank = 8 
+[231][AUTO DEBUG] rank 0 page size = 2 KB 
+[235]DRAM BOOT DRIVE INFO: V0.30
+[238]DRAM CLK = 408 MHz
+[240]DRAM Type = 3 (2:DDR2,3:DDR3)
+[243]DRAMC ZQ value: 0x7b7bfb
+[246]DRAM ODT value: 0x40.
+[249]mark_id=0x6f00, ddr_type=0
+[253]DRAM SIZE = 128 MBytes, para1 = 10d2, para2 = 800010
+[260]DRAM simple test OK.
+[263]0x4338c4
+[264]0x0
+[265]DRAM: param set 1 succeeded, size=128MB
+[269]dram size = 128
+[271]nor already init
+[273]GPT load from sector:0x60, sectors: 0x8
+[278]init_gpt OK
+[280]can't find the part env
+[282]can't find the part env-redund
+[286]fw_env_open failed
+[288]now use the first boot
+[291]Succeed in reading toc file head.
+[295]The size of toc is ac000.
+[327]Entry_name        = melis-lzma
+[330]LZMA: Image address............... 0x41000800
+[335]LZMA: Properties address.......... 0x41000800
+[340]LZMA: Uncompressed size address... 0x41000805
+[345]LZMA: Compressed data address..... 0x4100080d
+[349]LZMA: Destination address......... 0x40050000
+[354]LZMA: Uncompresed size............ 0x00113ef0
+[359]LZMA: Compresed size.............. 0xfffffffa
+[712]LZMA: Uncompressed ............... 0x00113ef0
+[717]Entry_name        = melis-config
+[720]image_base:43000000
+[723]Entry_name        = opensbi
+[726]Jump to OpenSBI: opensbi_base = 0x40000000, dtb_base = 0x40013000, uboot_base = 0x0
+
+===============================================================================================================
+|commitid: 27735c9c
+|timever : Fri, 16 Oct 2026 14:36:39 +0800
+|author  : rose[110D[110C|
+===============================================================================================================
+
+[1;40;33m[DBG][0m: [__mount_parts:0297]: [60D[60C[1;40;33mclassname=DMS[0m
+[1;40;33m[DBG][0m: [__mount_parts:0298]: [60D[60C[1;40;33mdevname=dms01[0m
+[1;40;33m[DBG][0m: [__mount_parts:0326]: [60D[60C[1;40;33mfind last lun.[0m
+[1;40;33m[DBG][0m: [__mount_parts:0361]: [60D[60C[1;40;33mnPart = 1.[0m
+[1;40;33m[DBG][0m: [__mount_parts:0490]: [60D[60C[1;40;33mdmsPart: "DMS\dms010" is linked to symbel "B".[0m
+mount errno: -19!
+[1;40;33m[DBG][0m: [esFSYS_mntfs:0295]: [60D[60C[1;40;33mmelis_devfs,mount on B.[0m
+[1;40;33m[DBG][0m: [kservice_maintask:0850]: [60D[60C[1;40;33mpartition [B] plug in..[0m
+dfs already init.
+[1;40;33m[DBG][0m: [ext_rtc_config:0273]: [60D[60C[1;40;33mexternal rtc slave addr : 0xa2
+[0m
+[1;40;33m[DBG][0m: [init_ext_rtc:0297]: [60D[60C[1;40;33mext_rtc init finish[0m
+drv_g2d_init : 371 reg_base = 5410000
+used_card_no = 0x4
+init sdmmc driver name: sdmmc2 i= 2
+SDC:hal_sdc_create host:0x4028b7c0 id:2
+host debug mask 3cSDC:name: port 5,port_num 2,mul_sel 9, pull 1, drv_level 2
+SDC:name: port 5,port_num 3,mul_sel 9, pull 1, drv_level 2
+SDC:name: port 5,port_num 1,mul_sel 9, pull 1, drv_level 2
+SDC:name: port 5,port_num 0,mul_sel 9, pull 1, drv_level 2
+SDC:name: port 5,port_num 5,mul_sel 9, pull 1, drv_level 2
+SDC:name: port 5,port_num 4,mul_sel 9, pull 1, drv_level 2
+[1;40;31m[ERR][0m: [hal_gpio_sel_vol_bank_mode_auto:1491]: [60D[60C[1;40;31mCurrnet platform support auto withstand voltage mode
+[0m
+[ERR] SDC:sdmmc2 reset pin setting on sys_config.fex fail
+SDC:Not implement __mci_restore_io,958
+SDC:Not imp hal_sdc_init,2757
+SDC:hal_sdc_init,2781 no imp
+SDC:hal_sdc_init,2807 no imp
+SDC:SDC Host Capability:0x20f Ocr avail:0x3f0000
+SDC:Not implement __mci_hold_io,943
+SDC:SDC cd_mode:2 present_val:0
+SDC:SDC id:2 dma_use:1 present:0
+ driver version SD/MMC/SDIO Host Controller Driver(v0.30 2023-10-30 12:10) init ok.
+host_id =2!
+
+use lcd[auto_mipi] drv timing para
+
+[1;40;33m[DBG][0m: [amp_init:0078]: [60D[60C[1;40;33mamp init ok[0m
+mbus_init sys config num:9
+[1;40;31m[ERR][0m: [hal_gpadc_hw_init:0705]: [60D[60C[1;40;31mgpadc enable calibration[0m
+the cir_master_init success
+[1;40;33m[DBG][0m: [hal_g_sensor_init:0446]: [60D[60C[1;40;33mtwi_id : 68
+[0m
+[1;40;33m[DBG][0m: [hal_g_sensor_init:0455]: [60D[60C[1;40;33mg_sensor slave addr : 0x19
+[0m
+scheduler startup
+[1;40;33m[DBG][0m: [read_chip_id:0220]: [60D[60C[1;40;33msc7a20 id = 0x11
+[0m
+init eardir now : 0
+phone finish
+[31m[SND_ERR][sunxi_pa_pin_init:480]pacfg_level_trig_init failed
+[0m[31m[SND_ERR][sunxi_codec_init:1351]lineinl_gain invaild
+[0m[31m[SND_ERR][sunxi_codec_init:1360]fminl_gain invaild
+[0m[1;40;31m[ERR][0m: [tiny_queue_system_init:0080]: [60D[60C[1;40;31minit tiny system[0m
+flash : 1
+sip : 0
+nor_scan
+spinor flash id  : 0x204017
+spinor flash name: XM25QH64C
+flash : 1
+sip : 0
+nor flash init ok
+[1;40;33m[DBG][0m: [__mount_parts:0297]: [60D[60C[1;40;33mclassname=DISK[0m
+[1;40;33m[DBG][0m: [__mount_parts:0298]: [60D[60C[1;40;33mdevname=ROOTFS[0m
+[1;40;33m[DBG][0m: [__mount_parts:0326]: [60D[60C[1;40;33mfind last lun.[0m
+[1;40;33m[DBG][0m: [__mount_parts:0361]: [60D[60C[1;40;33mnPart = 1.[0m
+[1;40;33m[DBG][0m: [__mount_parts:0490]: [60D[60C[1;40;33mrawpart: "DISK\ROOTFS0" is linked to symbel "D".[0m
+[1;40;33m[DBG][0m: [esFSYS_mntfs:0295]: [60D[60C[1;40;33mminfs,mount on D.[0m
+[1;40;33m[DBG][0m: [kservice_maintask:0850]: [60D[60C[1;40;33mpartition [D] plug in..[0m
+mipi id read ok: num 4 [0x0 0x0 0x0 0x0]
+mipi id read ok: num 1 [0x98 0x81 0x1c 0x0]
+[1;40;31m[ERR][0m: [LCD_panel_init:1253]: [60D[60C[1;40;31minit ili9881_inx_f101a35[0m
+[1;40;33m[DBG][0m: [melis_rwpart_check:0589]: [60D[60C[1;40;33mUDISK   actual_crc:1c521933, crc32:ffffffff
+[0m
+[1;40;33m[DBG][0m: [melis_rwpart_check:0593]: [60D[60C[1;40;33mUDISK   actual_crc_backup:1c521933, crc32_backup:ffffffff
+[0m
+[1;40;33m[DBG][0m: [melis_rwpart_check:0622]: [60D[60C[1;40;33mmelis_rwpart_check 622 data damage,will reformat data
+[0m
+[1;40;33m[DBG][0m: [__mount_parts:0297]: [60D[60C[1;40;33mclassname=DISK[0m
+[1;40;33m[DBG][0m: [__mount_parts:0298]: [60D[60C[1;40;33mdevname=UDISK[0m
+[1;40;33m[DBG][0m: [__mount_parts:0326]: [60D[60C[1;40;33mfind last lun.[0m
+[1;40;33m[DBG][0m: [__mount_parts:0361]: [60D[60C[1;40;33mnPart = 1.[0m
+[1;40;33m[DBG][0m: [__mount_parts:0490]: [60D[60C[1;40;33mrawpart: "DISK\UDISK0" is linked to symbel "E".[0m
+[1;40;31m[ERR][0m: [exfat_identify:0127]: [60D[60C[1;40;31mexfat_boot_sector_is_exfat failed[0m
+[1;40;31m[ERR][0m: [esFSYS_mntfs:0276]: [60D[60C[1;40;31midentify the filesystem failure.[0m
+[1;40;31m[ERR][0m: [__mount_parts:0547]: [60D[60C[1;40;31mmount E failure.[0m
+[1;40;33m[DBG][0m: [esMODS_MInstall:0745]: [60D[60C[1;40;33minstall d:\mod\slib.mod[0m
+libver[dbdbcc38ad17668796e1f485515df3f201d06083]
+[1;40;33m[DBG][0m: [esMODS_MInstall:0745]: [60D[60C[1;40;33minstall d:\mod\display.mod[0m
+[1;40;33m[DBG][0m: [esMODS_MInstall:0745]: [60D[60C[1;40;33minstall d:\mod\mixture.mod[0m
+[1;40;33m[DBG][0m: [esMODS_MInstall:0745]: [60D[60C[1;40;33minstall d:\mod\vcoder.mod[0m
+[1;40;33m[DBG][0m: [layer_request:0707]: [60D[60C[1;40;33mlayer_request MOD_DISP_LAYER_WORK_MODE_SCALER[0m
+[1;40;33m[DBG][0m: [layer_request:0757]: [60D[60C[1;40;33mrequested: ch:0, id:0  disp_mgr[0].req_layer_cnt = 1[0m
+dir now : 3
+[1;40;31m[ERR][0m: [esFSYS_fopen:0147]: [60D[60C[1;40;31mpart "e:\mixture.bin" not accessable!
+[0m
+[1;40;31m[ERR][0m: [open_lcd_backlight:0667]: [60D[60C[1;40;31mget backlight err,default to 100[0m
+[1;40;33m[DBG][0m: [awos_init_thread:0341]: [60D[60C[1;40;33mlogo end
+[0m
+Mount RAMDisk done!
+[1;40;33m[DBG][0m: [esMODS_MInstall:0745]: [60D[60C[1;40;33minstall d:\mod\charset.mod[0m
+[1;40;33m[DBG][0m: [eschs_init:0067]: [60D[60C[1;40;33mcharset ok![0m
+msh />enter app_entry
+Execute startup script begin
+untar and xz..
+card_detect removed sdmmc_test->card_id=2
+[WRN] SD:mmc_card_open card not exit! id:2
+card open fail
+[1;40;31m[ERR][0m: [hal_gpio_sel_vol_bank_mode_auto:1491]: [60D[60C[1;40;31mCurrnet platform support auto withstand voltage mode
+[0m
+mkdir:/tmp/res/
+mkdir:/tmp/res/fonts/
+mkdir:/tmp/res/lang/
+mkdir:/tmp/res/theme/
+mkdir:/tmp/res/theme/clock/
+mkdir:/tmp/res/theme/photo/
+mkdir:/tmp/res/theme/setting/
+mkdir:/tmp/res/theme/alarm/
+mkdir:/tmp/res/theme/home/
+mkdir:/tmp/res/theme/calendar/
+mkdir:/tmp/res/theme/music/
+mkdir:/tmp/res/theme/movie/
+mkdir:/tmp/res/sounds/
+done
+xz finish
+[1;40;33m[DBG][0m: [usb_monitor:0084]: [60D[60C[1;40;33m.start device monitor ...[0m
+	 install mod para num [2]: insmod d:\mod\lvgl.mod 
+[1;40;33m[DBG][0m: [esMODS_MInstall:0745]: [60D[60C[1;40;33minstall d:\mod\lvgl.mod[0m
+[1;40;31m[ERR][0m: [sunxi_hci_get_config_param:0422]: [60D[60C[1;40;31mget usb_drv_vbus_gpio fail!
+[0m
+[1;40;31m[ERR][0m: [sunxi_hci_get_config_param:0433]: [60D[60C[1;40;31mget usbh_driver_level fail!!
+[0m
+
+[ehci-usb0] insmod host driver!
+using default phy
+[1;40;31m[ERR][0m: [sunxi_hci_get_config_param:0422]: [60D[60C[1;40;31mget usb_drv_vbus_gpio fail!
+[0m
+[1;40;31m[ERR][0m: [sunxi_hci_get_config_param:0433]: [60D[60C[1;40;31mget usbh_driver_level fail!!
+[0m
+
+[ohci-usb0] insmod host driver!
+using default phy
+[1;40;33m[DBG][0m: [alsa_open_pcm:0318]: [60D[60C[1;40;33malsa open pcm! card:[audiocodec], pcmFlag:[1](0-cap;1-play)[0m
+[1;40;33m[DBG][0m: [alsa_open_pcm:0318]: [60D[60C[1;40;33malsa open pcm! card:[default], pcmFlag:[1](0-cap;1-play)[0m
+[1;40;31m[ERR][0m: [esFSYS_fopen:0147]: [60D[60C[1;40;31mpart "e:\setting.bin" not accessable!
+[0m
+[1;40;31m[ERR][0m: [dsk_reg_read_config_file:0204]: [60D[60C[1;40;31me:\setting.bin eLIBs_fopen fail
+[0m
+[1;40;33m[DBG][0m: [dsk_reg_init_para:0288]: [60D[60C[1;40;33mconfig not ok, format e:
+[0m
+[1;40;33m[DBG][0m: [esFSYS_format:0220]: [60D[60C[1;40;33mhere[0m
+[1;40;33m[DBG][0m: [esFSYS_format:0243]: [60D[60C[1;40;33mhere[0m
+[1;40;33m[DBG][0m: [esFSYS_format:0248]: [60D[60C[1;40;33mopen part "e:\"
+[0m
+[1;40;33m[DBG][0m: [esFSYS_format:0256]: [60D[60C[1;40;33mhere[0m
+[1;40;33m[DBG][0m: [fat_format:0047]: [60D[60C[1;40;33mfat format enter...
+[0m
+[1;40;33m[DBG][0m: [fat_format:0049]: [60D[60C[1;40;33mfat format return(0)
+[0m
+[1;40;33m[DBG][0m: [esFSYS_format:0264]: [60D[60C[1;40;33mhere[0m
+[1;40;33m[DBG][0m: [esFSYS_mntfs:0295]: [60D[60C[1;40;33mfat,mount on E.[0m
+[1;40;33m[DBG][0m: [kservice_maintask:0850]: [60D[60C[1;40;33mpartition [E] plug in..[0m
+nice_version:97732b35fddab68afc43362c7a8c4a13e553e318
+nice_make_time:2026-08-25
+[1;40;33m[DBG][0m: [lv_port_disp_init:0191]: [60D[60C[1;40;33msize of screen = 4097023
+[0m
+Turn on 2d hardware acceleration blit.
+Turn on 2d hardware acceleration blend.
+authcode:	6fbb8497cc9ae7b57f31542bf207e357
+[1;40;33m[DBG][0m: [check_verfiy:0024]: [60D[60C[1;40;33mlicense ok[0m
+[1;40;31m[ERR][0m: [lv_start:0164]: [60D[60C[1;40;31mlicense success[0m
+[1;40;33m[DBG][0m: [volume_default_set:0421]: [60D[60C[1;40;33mvolume : 8[0m
+[1;40;33m[DBG][0m: [_set_volume:0208]: [60D[60C[1;40;33mvolume = 33[0m
+[1;40;33m[DBG][0m: [alsa_mixer_set_volume:0633]: [60D[60C[1;40;33mNow card: audiocodec set Capturegain to:140, err:0[0m
+[1;40;33m[DBG][0m: [init_disk_usage:0167]: [60D[60C[1;40;33mpart_cnt = 0[0m
+[1;40;33m[DBG][0m: [screen_start:0227]: [60D[60C[1;40;33mdir : 3[0m
+[1;40;31m[ERR][0m: [auto_rotate_cb:0445]: [60D[60C[1;40;31mdir = 3[0m
+[1;40;33m[DBG][0m: [this_group_init:0056]: [60D[60C[1;40;33mcreate group home[0m
+[1;40;33m[DBG][0m: [nor_xmc_lock_blk:0269]: [60D[60C[1;40;33mxmc sr1 = 0x1c[0m
+Mod:d:\mod\lvgl.mod Installed!, mod id=137
+Execute startup script end
+[1;40;31m[ERR][0m: [nor_xmc_unlock_blk:0377]: [60D[60C[1;40;31mxmc sr1 = 0x00[0m
+[1;40;31m[ERR][0m: [dsk_reg_flush:0495]: [60D[60C[1;40;31msave data..[0m
+[1;40;33m[DBG][0m: [nor_xmc_lock_blk:0269]: [60D[60C[1;40;33mxmc sr1 = 0x1c[0m
+[1;40;33m[DBG][0m: [layer_request:0724]: [60D[60C[1;40;33mlayer_request MOD_DISP_LAYER_WORK_MODE_NORMAL[0m
+[1;40;33m[DBG][0m: [layer_request:0757]: [60D[60C[1;40;33mrequested: ch:1, id:0  disp_mgr[0].req_layer_cnt = 1[0m
+timeout
+timeout
+timeout
+timeout
+[1;40;33m[DBG][0m: [check_fs_part_auto_play:0311]: [60D[60C[1;40;33mlast_disk : 0[0m
+timeout
+timeout
+[1;40;33m[DBG][0m: [check_fs_part_auto_play:0311]: [60D[60C[1;40;33mlast_disk : 0[0m
+[1;40;33m[DBG][0m: [check_fs_part_auto_play:0311]: [60D[60C[1;40;33mlast_disk : 0[0m
+timeout
+timeout
+[1;40;33m[DBG][0m: [check_fs_part_auto_play:0311]: [60D[60C[1;40;33mlast_disk : 0[0m
+timeout
+timeout
+[1;40;33m[DBG][0m: [check_fs_part_auto_play:0311]: [60D[60C[1;40;33mlast_disk : 0[0m
+timeout
+timeout
+timeout
+timeout
+timeout
+timeout
+timeout
+timeout
+timeout
+timeout
+timeout
+timeout
+timeout
+timeout
+timeout
+timeout
+timeout
+timeout
+timeout
+timeout
+timeout
+timeout
+timeout
+timeout
+timeout
+timeout
+timeout
+timeout
+timeout
+timeout
+timeout
+timeout
+timeout
+timeout
+timeout
+timeout
+timeout
+timeout
+timeout
+timeout
+timeout
+timeout
+timeout
+timeout
+timeout
+timeout
+timeout
+timeout
+timeout
+timeout
+timeout
+timeout
+timeout
+timeout
+timeout
+timeout
+timeout
+timeout
+timeout
+timeout
+timeout
+timeout
+timeout
+timeout
+timeout
+timeout
+timeout
+t

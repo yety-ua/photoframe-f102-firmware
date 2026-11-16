@@ -1,0 +1,6 @@
+.DS_Store
+__pycache__/
+*.pyc
+build_kit/out/
+build_kit/bin/*.dll
+firmware/A_stock_seller_2026-10-16/
